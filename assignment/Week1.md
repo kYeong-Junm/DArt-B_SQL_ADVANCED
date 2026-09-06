@@ -64,22 +64,20 @@ https://www.youtube.com/watch?v=lBk5YhLZevs&list=PLVsNizTWUw7GCfy5RH27cQL5MeKYnl
 
 
 > **테이블 만들기(71 ~ 75p)의 1~7과정 진행 후 과제 페이지에서 요구하는 인증사진을 첨부해주세요.**
-<img width="252" height="311" alt="image" src="https://github.com/user-attachments/assets/cda91f6e-3167-493e-999e-39fe24f99e92" />
+<img width="1397" height="972" alt="image" src="https://github.com/user-attachments/assets/b40557e5-22c0-4915-903a-861a918afff1" />
 
 
 > **데이터 입력하기(75 ~ 79p)의 1~11과정 진행 후 과제 페이지에서 요구하는 인증사진을 첨부해주세요.**
-<img width="417" height="180" alt="image" src="https://github.com/user-attachments/assets/3ce2b307-7045-43ac-9ac2-4cbad102117d" />
+<img width="1397" height="951" alt="image" src="https://github.com/user-attachments/assets/d9eb7081-6537-4315-9286-4e7365e8c61f" />
+<img width="1392" height="932" alt="image" src="https://github.com/user-attachments/assets/0db81423-2ec4-4fd6-8338-b410b77c2fe2" />
 
-
-<img width="452" height="187" alt="image" src="https://github.com/user-attachments/assets/ca799c9e-dde7-4f33-944d-ff5bbd1a4af2" />
 
 
 > **데이터 활용하기(80 ~ 83p)의 1~6과정 진행 후 과제 페이지에서 요구하는 인증사진을 첨부해주세요.**
-<img width="860" height="681" alt="image" src="https://github.com/user-attachments/assets/a2bdf7f2-3612-4be7-b725-99d9ce67542c" />
+<img width="1376" height="992" alt="image" src="https://github.com/user-attachments/assets/1bc8a138-a868-40f8-874f-6a3f97d83534" />
+<img width="1377" height="935" alt="image" src="https://github.com/user-attachments/assets/04001ad7-a93d-462e-80a1-a7310b23a7fa" />
 
-<img width="835" height="642" alt="image" src="https://github.com/user-attachments/assets/1e738e09-c906-47ac-99f3-eb8491244b67" />
 
-<img width="830" height="602" alt="image" src="https://github.com/user-attachments/assets/1d002840-a2ee-4a5f-b837-735b74b84694" />
 
 
 
