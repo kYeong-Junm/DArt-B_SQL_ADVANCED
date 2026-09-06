@@ -60,7 +60,8 @@ https://www.youtube.com/watch?v=lBk5YhLZevs&list=PLVsNizTWUw7GCfy5RH27cQL5MeKYnl
 
 ## 02-2. 데이터베이스 시작부터 끝까지 
 > **데이터베이스 만들기(68 ~ 71p)의 1~5과정 진행 후 과제 페이지에서 요구하는 인증사진을 첨부해주세요.**
-<!-- 이 부분을 지우고 인증사진을 제출해주세요.-->
+<img width="230" height="497" alt="image" src="https://github.com/user-attachments/assets/ee3cfd98-c601-4e08-ae52-5eb6582bb99f" />
+
 
 > **테이블 만들기(71 ~ 75p)의 1~7과정 진행 후 과제 페이지에서 요구하는 인증사진을 첨부해주세요.**
 <!-- 이 부분을 지우고 인증사진을 제출해주세요.-->
