@@ -54,7 +54,8 @@ https://www.youtube.com/watch?v=lBk5YhLZevs&list=PLVsNizTWUw7GCfy5RH27cQL5MeKYnl
 
 <!-- 이번 챕터는 개념정리 없이 MySQL 설치 후 인증사진으로 대체합니다. -->
 
-<!-- 이 부분을 지우고 인증사진을 제출해주세요.-->
+<img width="1917" height="1077" alt="image" src="https://github.com/user-attachments/assets/42523db4-3f76-48a1-b4a1-72a062410c29" />
+
 
 
 ## 02-2. 데이터베이스 시작부터 끝까지 
