@@ -75,7 +75,14 @@ https://www.youtube.com/watch?v=lBk5YhLZevs&list=PLVsNizTWUw7GCfy5RH27cQL5MeKYnl
 
 
 > **데이터 활용하기(80 ~ 83p)의 1~6과정 진행 후 과제 페이지에서 요구하는 인증사진을 첨부해주세요.**
-<!-- 이 부분을 지우고 인증사진을 제출해주세요.-->
+<img width="860" height="681" alt="image" src="https://github.com/user-attachments/assets/a2bdf7f2-3612-4be7-b725-99d9ce67542c" />
+
+<img width="835" height="642" alt="image" src="https://github.com/user-attachments/assets/1e738e09-c906-47ac-99f3-eb8491244b67" />
+
+<img width="830" height="602" alt="image" src="https://github.com/user-attachments/assets/1d002840-a2ee-4a5f-b837-735b74b84694" />
+
+
+
 
 ---
 
