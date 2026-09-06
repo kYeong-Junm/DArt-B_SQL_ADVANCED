@@ -64,7 +64,8 @@ https://www.youtube.com/watch?v=lBk5YhLZevs&list=PLVsNizTWUw7GCfy5RH27cQL5MeKYnl
 
 
 > **테이블 만들기(71 ~ 75p)의 1~7과정 진행 후 과제 페이지에서 요구하는 인증사진을 첨부해주세요.**
-<!-- 이 부분을 지우고 인증사진을 제출해주세요.-->
+<img width="252" height="311" alt="image" src="https://github.com/user-attachments/assets/cda91f6e-3167-493e-999e-39fe24f99e92" />
+
 
 > **데이터 입력하기(75 ~ 79p)의 1~11과정 진행 후 과제 페이지에서 요구하는 인증사진을 첨부해주세요.**
 <img width="417" height="180" alt="image" src="https://github.com/user-attachments/assets/3ce2b307-7045-43ac-9ac2-4cbad102117d" />
