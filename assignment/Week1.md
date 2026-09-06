@@ -67,7 +67,11 @@ https://www.youtube.com/watch?v=lBk5YhLZevs&list=PLVsNizTWUw7GCfy5RH27cQL5MeKYnl
 <!-- 이 부분을 지우고 인증사진을 제출해주세요.-->
 
 > **데이터 입력하기(75 ~ 79p)의 1~11과정 진행 후 과제 페이지에서 요구하는 인증사진을 첨부해주세요.**
-<!-- 이 부분을 지우고 인증사진을 제출해주세요.-->
+<img width="417" height="180" alt="image" src="https://github.com/user-attachments/assets/3ce2b307-7045-43ac-9ac2-4cbad102117d" />
+
+
+<img width="452" height="187" alt="image" src="https://github.com/user-attachments/assets/ca799c9e-dde7-4f33-944d-ff5bbd1a4af2" />
+
 
 > **데이터 활용하기(80 ~ 83p)의 1~6과정 진행 후 과제 페이지에서 요구하는 인증사진을 첨부해주세요.**
 <!-- 이 부분을 지우고 인증사진을 제출해주세요.-->
