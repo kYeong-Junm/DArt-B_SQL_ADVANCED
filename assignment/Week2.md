@@ -135,15 +135,15 @@ HAVING절: 집계 함수에 대해 조건을 제한하며, GROUP BY 다음에 �
 
 ## 관련 용어 
 
-| 용어 | 약자 | 설명 |
-|---|---|---|
-| NULL | | 아무 것도 없는 값. AUTO_INCREMENT 열에 값을 입력할 때는 NULL로 지정함 |
-| PRIMARY KEY | PK | 기본 키. AUTO_INCREMENT 열은 기본 키로 지정해야 함 |
-| ALTER TABLE | | 테이블의 구조를 변형하는 SQL |
-| 시스템 변수 | | MySQL에서 자체적으로 가지고 있는 설정값이 저장된 변수 |
-| @@auto_increment_increment | | AUTO_INCREMENT의 증가값을 지정하는 시스템 변수 |
-| DESCRIBE | DESC | 테이블의 구조를 확인하는 SQL |
-| TRUNCATE | | DELETE와 비슷한 기능이지만 전체 행을 삭제할 때 사용 |
+| 용어 | 설명 |
+|---|
+| NULL | 아무 것도 없는 값. AUTO_INCREMENT 열에 값을 입력할 때는 NULL로 지정함 |
+| PRIMARY KEY | 기본 키. AUTO_INCREMENT 열은 기본 키로 지정해야 함 |
+| ALTER TABLE | 테이블의 구조를 변형하는 SQL |
+| 시스템 변수 | MySQL에서 자체적으로 가지고 있는 설정값이 저장된 변수 |
+| @@auto_increment_increment | AUTO_INCREMENT의 증가값을 지정하는 시스템 변수 |
+| DESCRIBE | 테이블의 구조를 확인하는 SQL |
+| TRUNCATE | DELETE와 비슷한 기능이지만 전체 행을 삭제할 때 사용 |
 
 ## 공통 주의사항
 
