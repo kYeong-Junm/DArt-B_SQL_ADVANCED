@@ -136,7 +136,7 @@ HAVING절: 집계 함수에 대해 조건을 제한하며, GROUP BY 다음에 �
 ## 관련 용어 
 
 | 용어 | 설명 |
-|---|
+|---|---|
 | NULL | 아무 것도 없는 값. AUTO_INCREMENT 열에 값을 입력할 때는 NULL로 지정함 |
 | PRIMARY KEY | 기본 키. AUTO_INCREMENT 열은 기본 키로 지정해야 함 |
 | ALTER TABLE | 테이블의 구조를 변형하는 SQL |
