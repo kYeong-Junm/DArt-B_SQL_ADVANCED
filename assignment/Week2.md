@@ -127,8 +127,6 @@ HAVING절: 집계 함수에 대해 조건을 제한하며, GROUP BY 다음에 �
 
 <!-- INSERT문, UPDATE문, DELETE문에 관해 배우게 된 점을 적어주세요. -->
 
-```
-
 | 구분 | 기본 형식 | 세부 내용 |
 |---|---|---|
 | **INSERT문** | `INSERT INTO 테이블 [(열1, 열2, ...)] VALUES (값1, 값2, ...)` | - 테이블에 행 데이터를 입력<br>- **AUTO_INCREMENT**: 열을 정의할 때 1부터 증가하는 값을 자동으로 입력함<br>&nbsp;&nbsp;• 해당 열은 꼭 **PK(기본 키)**로 지정해야 함<br>&nbsp;&nbsp;• 자동 증가하는 부분은 값 대신 **NULL**로 채워 넣음<br>&nbsp;&nbsp;• `@@auto_increment_increment`: AUTO_INCREMENT의 증가값을 지정하는 시스템 변수<br>- **INSERT INTO ~ SELECT**: 다른 테이블의 데이터를 가져와서 한 번에 입력함 |
@@ -151,8 +149,6 @@ HAVING절: 집계 함수에 대해 조건을 제한하며, GROUP BY 다음에 �
 
 - 세 문법 모두 실행 전에 `SELECT` 문으로 대상 행을 먼저 확인하는 습관을 들이면 실수를 줄일 수 있음
 - WHERE 절 누락은 UPDATE/DELETE에서 가장 흔한 실수 포인트
-
-```
   
 
 
