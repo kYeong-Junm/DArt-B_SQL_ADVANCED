@@ -46,6 +46,23 @@ https://www.youtube.com/watch?v=WWAFAm9op2U&list=PLVsNizTWUw7GCfy5RH27cQL5MeKYnl
 ## 1. 기본 중에 기본 SELECT ~ FROM ~ WHERE
 
 <!-- 기본적인 SQL 문법에 관해 배우게 된 점을 적어주세요. -->
+SELECT문: 테이블에서 데이터를 추출하는 기능.
+기본 형식: SELECT ~ FROM ~ WHERE ~ GROUP BY ~ HAVING ~ ORDER BY ~ LIMIT
+
+USE 데이터베이스_이름; -- 현재 사용하는 데이터베이스 지정
+
+WHERE절: 조회하는 결과에 특정한 조건을 추가함.
+
+관계 연산자: >, <, >=, <=, = 등
+
+논리 연산자: AND, OR
+
+BETWEEN ~ AND: 범위에 있는 값을 구함.
+
+IN(): 조건 중 하나에 포함되는 값을 구함.
+
+LIKE: 문자열의 일부 글자를 검색. (%: 무엇이든 허용, _: 한 글자)
+
 
 <!-- 과제 페이지를 참조하여 인증 사진 2장을 아래의 부분을 지우고 제출해주세요. -->
 
@@ -69,7 +86,8 @@ WHERE ________;
 ```
 
 ```
-여기에 답과 근거를 적어주세요!
+답: 1, 3
+이유: 
 ```
 
 
@@ -78,10 +96,11 @@ WHERE ________;
 <!-- ORDER BY절과 GROUP BY절 그리고 HAVING절에 관해 배우게 된 점을 적어주세요. -->
 
 ```
-여기에 배우게 된 점을 적어주세요!
-ORDER BY절: 
-GROUP BY절: 
-HAVING절:
+ORDER BY절: 결과가 출력되는 순서를 조절함.
+-ASC(오름차순, 디폴트), DESC(내림차)
+GROUP BY절: 데이터를 그룹으로 묶음.
+-함께 사용되는 집계 함수: SUM(), AVG(), MIN(), MAX(), COUNT(), COUNT(DISTINCT)
+HAVING절: 집계 함수에 대해 조건을 제한하며, GROUP BY 다음에 나옴.
 ```
 
 > **확인문제: 다음 표는 주요 집계함수를 정리한 것입니다. 각 설명에 해당하는 올바른 함수명을 기호에 맞게 작성하세요.**
@@ -97,10 +116,10 @@ HAVING절:
 
 ```
 여기에 답을 적어주세요!
-(ㄱ) 
-(ㄴ) 
-(ㄷ) 
-(ㄹ) 
+(ㄱ) AVG()
+(ㄴ) MIN()
+(ㄷ) COUNT()
+(ㄹ) COUNT(DISTINCT)
 ```
 
 
@@ -109,11 +128,32 @@ HAVING절:
 <!-- INSERT문, UPDATE문, DELETE문에 관해 배우게 된 점을 적어주세요. -->
 
 ```
-여기에 배우게 된 점을 적어주세요!
-INSERT문: 
-UPDATE문: 
-DELETE문:
+
+| 구분 | 기본 형식 | 세부 내용 |
+|---|---|---|
+| **INSERT문** | `INSERT INTO 테이블 [(열1, 열2, ...)] VALUES (값1, 값2, ...)` | - 테이블에 행 데이터를 입력<br>- **AUTO_INCREMENT**: 열을 정의할 때 1부터 증가하는 값을 자동으로 입력함<br>&nbsp;&nbsp;• 해당 열은 꼭 **PK(기본 키)**로 지정해야 함<br>&nbsp;&nbsp;• 자동 증가하는 부분은 값 대신 **NULL**로 채워 넣음<br>&nbsp;&nbsp;• `@@auto_increment_increment`: AUTO_INCREMENT의 증가값을 지정하는 시스템 변수<br>- **INSERT INTO ~ SELECT**: 다른 테이블의 데이터를 가져와서 한 번에 입력함 |
+| **UPDATE문** | `UPDATE 테이블 이름 SET 열1=값1, ... WHERE 조건` | - 행 단위로 기존 값을 수정함<br>- 콤마(,)로 분리해서 **여러 개의 열을 한 번에 변경** 가능<br>- ⚠️ **주의**: WHERE 절을 생략하면 테이블의 **모든 행**의 값이 변경됨 |
+| **DELETE문** | `DELETE FROM 테이블 WHERE 조건` | - 행 단위로 삭제<br>- ⚠️ **주의**: WHERE 절이 없으면 **전체 행 삭제**<br>- TRUNCATE와 기능은 비슷하지만, DELETE는 조건(WHERE)을 걸어 일부 행만 삭제할 수 있다는 차이가 있음 |
+
+## 관련 용어 
+
+| 용어 | 약자 | 설명 |
+|---|---|---|
+| NULL | | 아무 것도 없는 값. AUTO_INCREMENT 열에 값을 입력할 때는 NULL로 지정함 |
+| PRIMARY KEY | PK | 기본 키. AUTO_INCREMENT 열은 기본 키로 지정해야 함 |
+| ALTER TABLE | | 테이블의 구조를 변형하는 SQL |
+| 시스템 변수 | | MySQL에서 자체적으로 가지고 있는 설정값이 저장된 변수 |
+| @@auto_increment_increment | | AUTO_INCREMENT의 증가값을 지정하는 시스템 변수 |
+| DESCRIBE | DESC | 테이블의 구조를 확인하는 SQL |
+| TRUNCATE | | DELETE와 비슷한 기능이지만 전체 행을 삭제할 때 사용 |
+
+## 공통 주의사항
+
+- 세 문법 모두 실행 전에 `SELECT` 문으로 대상 행을 먼저 확인하는 습관을 들이면 실수를 줄일 수 있음
+- WHERE 절 누락은 UPDATE/DELETE에서 가장 흔한 실수 포인트
+
 ```
+  
 
 
 # 2️⃣ 실습과제
