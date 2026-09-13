@@ -197,7 +197,12 @@ WHERE ________;
 3. 현재 구매 테이블에 존재하는 서로 다른 상품(prod_name)이 어떤 것이 있는지 조회하시오.
 4. 총 구매 금액이 1000미만인 prod_name 중 상위 2개만 조회하시오.
 
-<!-- 이 부분을 지우고 인증사진을 제출해주세요.-->
+
+<img width="827" height="675" alt="image" src="https://github.com/user-attachments/assets/7451aeda-879b-48de-93aa-e441bb4c6a39" />
+<img width="830" height="661" alt="image" src="https://github.com/user-attachments/assets/2431d090-1c18-4c6c-a1ac-cd48d1ab44f8" />
+<img width="845" height="652" alt="image" src="https://github.com/user-attachments/assets/c114203c-5678-4881-9597-5a7139ba397b" />
+<img width="837" height="697" alt="image" src="https://github.com/user-attachments/assets/987dd396-8bf8-4913-8388-2a3db6154801" />
+
 
 ### 🎉 수고하셨습니다.
 
