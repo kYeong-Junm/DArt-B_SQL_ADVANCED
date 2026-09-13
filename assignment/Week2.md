@@ -82,7 +82,9 @@ https://www.youtube.com/watch?v=WWAFAm9op2U&list=PLVsNizTWUw7GCfy5RH27cQL5MeKYnl
 <!-- 과제 페이지를 참조하여 인증 사진 2장을 아래의 부분을 지우고 제출해주세요. -->
 
 <img width="1376" height="957" alt="image" src="https://github.com/user-attachments/assets/f57dde98-1282-42f9-97df-9521add2fb5b" />
-???
+
+<img width="656" height="612" alt="image" src="https://github.com/user-attachments/assets/c82e0530-495f-4766-85d0-7eb2bc2fd4ad" />
+
 
 > **확인문제: 주소의 지역이 서울, 경기인 회원을 추출하는 SQL 문입니다. 빈칸에 들어갈 수 있는 것을 모두 고르세요.**
 
