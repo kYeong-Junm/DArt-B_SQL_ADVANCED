@@ -314,8 +314,283 @@ CONVERT(), CAST()
 
 ## 2. 두 테이블을 묶는 조인
 
-<!-- 두 테이블을 묶는 조인에 관해 배우게 된 점을 적어주세요. -->
-<!-- 과제 설명 예시처럼 직접 실습 후 인증 사진 4장 이상을 첨부해주세요. -->
+# 4장-2. 두 테이블을 묶는 조인
+
+핵심 키워드: `일대다 관계` `조인` `내부 조인` `외부 조인` `상호 조인` `자체 조인`
+
+## 목차
+- [조인이란](#조인이란)
+- [일대다 관계의 이해](#일대다-관계의-이해)
+- [내부 조인](#내부-조인)
+- [내부 조인의 간결한 표현](#내부-조인의-간결한-표현)
+- [내부 조인의 활용](#내부-조인의-활용)
+- [외부 조인](#외부-조인)
+- [상호 조인](#상호-조인)
+- [핵심 개념 요약](#핵심-개념-요약)
+
+---
+
+## 조인이란
+
+**조인(join)이란 두 개의 테이블을 서로 묶어서 하나의 결과를 만들어 내는 것**을 말함. 두 테이블을 엮어야만 원하는 형태가 나오는 경우가 많음.
+
+예: 회원 테이블(이름, 연락처)과 구매 테이블(구매한 물건) → 물건을 배송하려면 **회원 이름·연락처 + 구매한 물건 정보**가 함께 필요 → 이렇게 두 테이블을 엮어서 하나의 배송 정보를 추출하는 것이 대표적인 조인.
+
+---
+
+## 일대다 관계의 이해
+
+두 테이블의 조인을 위해서는 테이블이 **일대다(one to many) 관계**로 연결되어야 함.
+
+- 데이터베이스의 테이블은 하나로 구성되기보다는 여러 정보를 주제에 따라 분리해서 저장하는 것이 효율적. 이 분리된 테이블은 서로 **관계(relation)**를 맺고 있음
+- **일대다 관계란 한쪽 테이블에는 하나의 값만 존재해야 하지만, 연결된 다른 테이블에는 여러 개의 값이 존재할 수 있는 관계**를 말함
+
+### 예시: 회원 테이블 ↔ 구매 테이블
+
+- 회원 테이블에서 블랙핑크의 아이디는 'BLK'로 1명(1, one)밖에 없음 → 회원 테이블의 아이디를 **기본 키(Primary Key, PK)**로 지정
+- 구매 테이블의 아이디에서는 3개의 BLK를 찾을 수 있음 → 회원은 1명이지만 이 회원이 구매를 여러 번(다, many) 할 수 있음 → 구매 테이블의 아이디는 기본 키가 아닌 **외래 키(Foreign Key, FK)**로 설정
+
+> 일대다 관계는 주로 **기본 키(PK)와 외래 키(FK) 관계**로 맺어져 있음. 그래서 일대다 관계를 **'PK-FK 관계'**라고 부르기도 함
+
+- 회사원-급여 테이블, 학생-학점 테이블도 마찬가지로 1명이 여러 급여/학점을 받는 일대다 관계
+- 꼭 기본 키-외래 키 관계가 아니어도 가능한 조인도 있음 (예: 상호 조인). 상호 조인 외의 조인은 기본 키-외래 키 관계가 핵심 요소임
+
+---
+
+## 내부 조인
+
+일반적으로 조인이라고 부르는 것은 **내부 조인(inner join)**을 말하는 것으로, **조인 중에서 가장 많이 사용**됨. 조인은 3개 이상의 테이블로도 할 수 있지만 대부분 2개로 조인함.
+
+### 내부 조인의 형식
+
+```sql
+SELECT <열 목록>
+FROM <첫 번째 테이블>
+    INNER JOIN <두 번째 테이블>
+    ON <조인될 조건>
+[WHERE 검색 조건]
+```
+
+> `INNER JOIN`을 그냥 `JOIN`이라고만 써도 `INNER JOIN`으로 인식함
+
+### 실습: 구매 테이블 기준으로 회원 정보 조인하기
+
+```sql
+USE market_db;
+SELECT *
+    FROM buy
+    INNER JOIN member
+    ON buy.mem_id = member.mem_id
+    WHERE buy.mem_id = 'GRL';
+```
+
+> 두 개의 테이블(buy, member)을 조인하는 경우 동일한 열 이름이 존재한다면 꼭 **테이블_이름.열_이름 형식**으로 표기해야 함. 여기서는 `buy.mem_id`와 `member.mem_id`를 사용함
+
+### 내부 조인의 처리 과정
+
+1. 구매 테이블의 `mem_id`(`buy.mem_id`)인 'GRL'을 추출합니다.
+2. 'GRL'과 동일한 값을 회원 테이블의 `mem_id`(`member.mem_id`) 열에서 검색합니다.
+3. 'GRL'이라는 아이디를 찾으면 구매 테이블과 회원 테이블의 두 행을 결합(JOIN)합니다.
+
+### WHERE 절을 생략하면?
+
+`WHERE buy.mem_id = 'GRL'`을 생략하면, 원래는 구매 테이블의 7번째(GRL)에 대해서만 결합했지만, WHERE 절을 생략하면 **1번째 BLK부터 12번째 MMU까지 구매 테이블의 모든 행이 회원 테이블과 결합**함.
+
+```sql
+SELECT *
+    FROM buy
+    INNER JOIN member
+    ON buy.mem_id = member.mem_id;
+```
+
+> MySQL 버전에 따라 실행 결과의 차례는 다를 수 있음
+
+---
+
+## 내부 조인의 간결한 표현
+
+열이 너무 많아 복잡해 보이므로 필요한 아이디/이름/구매 물품/주소/연락처만 추출:
+
+```sql
+SELECT mem_id, mem_name, prod_name, addr, CONCAT(phone1, phone2) '연락처'
+    FROM buy
+    INNER JOIN member
+    ON buy.mem_id = member.mem_id;
+```
+
+### 열 이름이 불확실한 경우 오류 발생
+
+```
+Error Code: 1052. Column 'mem_id' in field list is ambiguous
+```
+- 회원 아이디(`mem_id`)는 회원 테이블, 구매 테이블에 모두 들어 있어서 **어느 테이블의 mem_id인지 헷갈린다**는 뜻
+- 이럴 때는 어느 테이블의 mem_id를 추출할지 정확하게 작성해야 함 (`buy.mem_id`처럼)
+
+```sql
+SELECT buy.mem_id, mem_name, prod_name, addr, CONCAT(phone1, phone2) '연락처'
+    FROM buy
+    INNER JOIN member
+    ON buy.mem_id = member.mem_id;
+```
+
+### 모든 열 이름을 명확히 표기
+
+SQL을 좀 더 명확히 하기 위해서 SELECT 다음의 열 이름(컬럼 이름)에도 모두 **테이블_이름.열_이름 형식**으로 작성 가능 (결과는 동일):
+
+```sql
+SELECT buy.mem_id, member.mem_name, buy.prod_name, member.addr,
+       CONCAT(member.phone1, member.phone2) '연락처'
+    FROM buy
+    INNER JOIN member
+    ON buy.mem_id = member.mem_id;
+```
+
+### 별칭(alias) 사용하기
+
+각 열이 어느 테이블에 속한 것인지 명확해졌지만 코드가 너무 길어져서 오히려 복잡해 보임. 이를 간결하게 표현하기 위해서는 **FROM 절에 나오는 테이블의 이름 뒤에 별칭(alias)을 줄 수 있음**. 여러 개의 테이블이 관련된 조인에서는 이 방식을 사용할 것을 적극 권장.
+
+```sql
+SELECT B.mem_id, M.mem_name, B.prod_name, M.addr,
+       CONCAT(M.phone1, M.phone2) '연락처'
+    FROM buy B
+    INNER JOIN member M
+    ON B.mem_id = M.mem_id;
+```
+
+---
+
+## 내부 조인의 활용
+
+**전체 회원**의 아이디/이름/구매한 제품/주소를 회원 아이디 순으로 정렬하여 출력:
+
+```sql
+SELECT M.mem_id, M.mem_name, B.prod_name, M.addr
+    FROM buy B
+    INNER JOIN member M
+    ON B.mem_id = M.mem_id
+    ORDER BY M.mem_id;
+```
+
+구매 테이블의 목록이 12건이었으므로 이상 없이 잘 나옴. 하지만 결과는 **'전체 회원'이 아닌 '구매한 기록이 있는 회원들'의 목록**임 (한 번도 구매하지 않은 회원의 정보는 없음).
+
+> **내부 조인은 두 테이블에 모두 있는 내용만 출력됨.** 만약 양쪽 중에 한곳이라도 내용이 있을 때 조인하려면 **외부 조인**을 사용해야 함
+
+### 중복된 결과 1개만 출력하기 (DISTINCT 활용)
+
+"한 번이라도 구매한 기록이 있는 회원들에게 감사 안내문을 발송"하려는 경우, 내부 조인 결과에서 중복된 이름은 필요 없으므로 **DISTINCT 문**을 활용해 회원의 주소를 조회 가능:
+
+```sql
+SELECT DISTINCT M.mem_id, M.mem_name, M.addr
+    FROM buy B
+    INNER JOIN member M
+    ON B.mem_id = M.mem_id
+    ORDER BY M.mem_id;
+```
+
+---
+
+## 외부 조인
+
+**내부 조인은 두 테이블에 모두 데이터가 있어야만 결과가 나옴. 이와 달리 외부 조인은 한쪽에만 데이터가 있어도 결과가 나옴.**
+
+### 외부 조인의 기본
+
+**외부 조인(outer join)은 두 테이블을 조인할 때 필요한 내용이 한쪽 테이블에만 있어도 결과를 추출**할 수 있음. 자주 사용되지는 않지만, 가끔 사용되는 방식이므로 알아두면 유용함.
+
+### 외부 조인의 형식
+
+```sql
+SELECT <열 목록>
+FROM <첫 번째 테이블(LEFT 테이블)>
+    <LEFT | RIGHT | FULL> OUTER JOIN <두 번째 테이블(RIGHT 테이블)>
+    ON <조인될 조건>
+[WHERE 검색 조건];
+```
+
+내부 조인보다는 조금 복잡해 보이지만 사용 방법은 거의 비슷함.
+
+### LEFT OUTER JOIN
+
+내부 조인에서 해결하지 못한 '전체 회원의 구매 기록(구매 기록이 없는 회원의 정보도 함께) 출력'을 외부 조인으로 만들기:
+
+```sql
+SELECT M.mem_id, M.mem_name, B.prod_name, M.addr
+    FROM member M
+    LEFT OUTER JOIN buy B
+    ON M.mem_id = B.mem_id
+    ORDER BY M.mem_id;
+```
+- **왼쪽에 있는 회원 테이블을 기준으로 외부 조인**함
+- `LEFT OUTER JOIN`을 줄여서 `LEFT JOIN`이라고만 써도 됨
+- **`LEFT OUTER JOIN` 문의 의미를 '왼쪽 테이블(member)의 내용은 모두 출력되어야 한다' 정도로 해석**하면 기억하기 쉬움
+- 결과: 구매 기록이 없는 회원(OMY, RED, SPC, TWC, WMN 등)도 `prod_name`이 NULL인 상태로 함께 출력됨 → **외부 조인은 한쪽 테이블에만 있는 내용도 출력됨**
+
+### RIGHT OUTER JOIN
+
+동일한 결과를 출력하려면 단순히 왼쪽과 오른쪽 테이블의 위치만 바꾸면 됨:
+
+```sql
+SELECT M.mem_id, M.mem_name, B.prod_name, M.addr
+    FROM buy B
+    RIGHT OUTER JOIN member M
+    ON M.mem_id = B.mem_id
+    ORDER BY M.mem_id;
+```
+- **오른쪽에 있는 회원 테이블을 기준으로 외부 조인**함
+
+### 외부 조인의 활용: 구매 이력이 없는 회원 찾기
+
+내부 조인으로는 구매 기록이 있는 회원 목록만 추출했었는데, 이번엔 반대로 **회원 가입만 하고 한 번도 구매한 적이 없는 회원의 목록**을 추출:
+
+```sql
+SELECT DISTINCT M.mem_id, B.prod_name, M.mem_name, M.addr
+    FROM member M
+    LEFT OUTER JOIN buy B
+    ON M.mem_id = B.mem_id
+    WHERE B.prod_name IS NULL
+    ORDER BY M.mem_id;
+```
+- 한 번도 구매하지 않았으므로 조인된 결과의 물건 이름(`prod_name`)이 당연히 비어있을 것 → **`IS NULL` 구문은 널(NULL) 값인지 비교**함
+
+### FULL OUTER JOIN
+
+**FULL OUTER JOIN은 왼쪽 외부 조인과 오른쪽 외부 조인이 합쳐진 것**이라고 생각하면 됨. 왼쪽이든 오른쪽이든 한쪽에 들어 있는 내용이면 출력함. 자주 사용되지는 않으니 이 정도만 알아두면 됨.
+
+---
+
+## 상호 조인
+
+내부 조인이나 외부 조인처럼 자주 사용되지는 않지만 가끔 유용하게 사용되는 조인으로 **상호 조인**과 **자체 조인**도 있음.
+
+**상호 조인(cross join)은 한쪽 테이블의 모든 행과 다른 쪽 테이블의 모든 행을 조인시키는 기능**을 말함. **상호 조인 결과의 전체 행 개수는 두 테이블의 각 행의 개수를 곱한 개수**가 됨.
+
+- 예: 회원 테이블의 첫 행이 구매 테이블의 모든 행과 조인됨. 나머지 행도 마찬가지 → 회원 테이블의 모든 행이 구매 테이블의 모든 행과 결합됨
+- 최종적으로 회원 테이블 10개 행 × 구매 테이블 12개 행 = 총 **120개**의 결과가 생성됨
+
+> 상호 조인은 기본 키-외래 키 관계가 아니어도 가능한, 조인 중 예외적인 형태
+
+---
+
+## 핵심 개념 요약
+
+| 개념 | 설명 |
+|---|---|
+| 일대다(one to many) 관계 | 한쪽 테이블에는 하나의 값만 존재하지만, 연결된 다른 테이블에는 여러 개의 값이 존재할 수 있는 관계. 주로 기본 키(PK)-외래 키(FK) 관계로 맺어짐 |
+| 내부 조인(INNER JOIN) | 두 테이블에 모두 데이터가 있는 행만 결합. 가장 많이 사용되는 조인 (그냥 JOIN이라 쓰면 내부 조인) |
+| 외부 조인(OUTER JOIN) | 한쪽 테이블에만 데이터가 있어도 결과를 출력. LEFT/RIGHT/FULL 세 종류 |
+| LEFT OUTER JOIN | 왼쪽 테이블의 내용은 모두 출력 |
+| RIGHT OUTER JOIN | 오른쪽 테이블의 내용은 모두 출력 |
+| FULL OUTER JOIN | 왼쪽·오른쪽 외부 조인을 합친 것 (한쪽에라도 있으면 출력) |
+| 상호 조인(CROSS JOIN) | 두 테이블의 모든 행끼리 조합 (결과 행 수 = 두 테이블 행 수의 곱) |
+| DISTINCT | 조인 결과에서 중복된 행을 제거하고 한 번만 출력 |
+| 별칭(alias) | FROM 절의 테이블 이름 뒤에 짧은 별칭을 붙여 SQL을 간결하게 표현 |
+
+<img width="1252" height="990" alt="image" src="https://github.com/user-attachments/assets/ff9e4d63-df2d-4ad6-90b2-8874aad044aa" />
+<img width="1172" height="995" alt="image" src="https://github.com/user-attachments/assets/5a99c90c-c9ec-49a4-8127-c8c1f998f803" />
+<img width="1212" height="987" alt="image" src="https://github.com/user-attachments/assets/25ae9e0b-7288-49f4-a853-f9ad5e42e016" />
+<img width="1202" height="992" alt="image" src="https://github.com/user-attachments/assets/b85646ba-cc4d-41b1-a437-81c0799b55c7" />
+
+
 
 > **확인문제: 다음 SQL은 회원으로 가입만 하고, 한 번도 구매한 적이 없는 회원의 목록을 조회하는 쿼리입니다. 빈칸에 들어갈 가장 적절한 구문을 고르세요..**
 
@@ -335,7 +610,8 @@ SELECT DISTINCT M.mem_id, B.prod_name, M.mem_name, M.addr
 4. WHERE B.prod_name IS NULL
 ```
 ```
-여기에 답과 그 이유를 적어주세요!
+답: WHERE B.prod_name IS NULL
+이유: 조인 결과에서 특정 조건으로 행을 걸러낼 때는 WHERE 절을 사용한다. JOIN은 조건 필터링 키워드가 아니고, LIMIT은 결과 개수 제한, HAVING은 GROUP BY와 함께 쓰이므로 이 쿼리에는 맞지 않는다.
 ```
 
 ## 3. SQL 프로그래밍 
