@@ -45,8 +45,6 @@ https://www.youtube.com/watch?v=JrXWxku7ZIM&list=PLVsNizTWUw7GCfy5RH27cQL5MeKYnl
 
 ## 1. 테이블 만들기 
 
-# 05-1 테이블 만들기
-
 > 핵심 키워드: `CREATE TABLE` `AUTO_INCREMENT` `NOT NULL` `PRIMARY KEY` `FOREIGN KEY`
 
 ## 1. 테이블이란?
@@ -383,7 +381,246 @@ CHECK / DEFAULT / PRIMAY KEY / UNIQUE / NOT NULL / FOREIGN KEY
 
 ## 3. 가상의 테이블: 뷰 
 
-<!-- 뷰에 관해 배우게 된 점을 적어주세요. -->
+> 핵심 키워드: `데이터베이스 개체` `뷰` `SELECT` `단순 뷰` `복합 뷰` `보안`
+
+## 1. 뷰(View)란?
+- **데이터베이스 개체** 중 하나로, 한마디로 **가상의 테이블**
+- 사용자 입장에서는 테이블과 거의 똑같이 사용
+- 뷰는 **데이터를 직접 가지고 있지 않음**
+- 뷰의 실체는 **SELECT 문** → 뷰에 접근하는 순간 SELECT가 실행되고 그 결과가 보임
+- 비유: 바탕 화면의 **바로 가기 아이콘** (실체는 없고 원본 파일에 연결됨)
+
+| 구분 | 실체 | 연결 대상 |
+|---|---|---|
+| 바로 가기 아이콘 | 없음 | 파일 |
+| 뷰 | 없음 | 테이블 |
+
+### 뷰의 종류
+| 종류 | 설명 |
+|---|---|
+| 단순 뷰 | 하나의 테이블로 만든 뷰 |
+| 복합 뷰 | 2개 이상의 테이블로 만든 뷰 (주로 조인 결과) → **읽기 전용** |
+
+---
+
+## 2. 뷰의 기본 생성과 사용
+
+### 형식
+```sql
+CREATE VIEW 뷰_이름
+AS
+    SELECT 문;
+```
+
+### 예시
+```sql
+USE market_db;
+CREATE VIEW v_member
+AS
+    SELECT mem_id, mem_name, addr FROM member;
+
+-- 테이블처럼 조회
+SELECT * FROM v_member;
+SELECT mem_name, addr FROM v_member
+    WHERE addr IN ('서울', '경기');
+```
+- 뷰 이름 앞에 `v_`를 붙이는 것이 일반적 (이름만 보고 뷰인지 알 수 있게)
+
+### 뷰의 작동 순서
+1. 사용자가 뷰에 조회 또는 변경 요청
+2. MySQL이 뷰 안의 SELECT를 테이블에 실행
+3. 테이블이 쿼리 결과값을 돌려줌
+4. 사용자에게 결과 전달
+
+→ 사용자는 1번과 4번만 보므로, 뷰에서 모두 처리된 것처럼 느낌
+
+---
+
+## 3. 뷰를 사용하는 이유
+
+### ① 보안에 도움이 됨
+- 테이블의 일부 열만 보여줄 수 있음
+- 예: 아르바이트생에게 회원의 이름·주소만 확인시키고 싶을 때
+  - member 테이블 접근 권한은 막고
+  - 아이디·이름·주소만 있는 `v_member`에만 권한을 줌
+  - → 연락처, 키, 데뷔 일자 등 개인 정보는 노출되지 않음
+
+### ② 복잡한 SQL을 단순하게 만듦
+```sql
+CREATE VIEW v_memberbuy
+AS
+    SELECT B.mem_id, M.mem_name, B.prod_name, M.addr,
+           CONCAT(M.phone1, M.phone2) '연락처'
+        FROM buy B
+            INNER JOIN member M
+            ON B.mem_id = M.mem_id;
+
+-- 이후에는 간단하게 조회
+SELECT * FROM v_memberbuy WHERE mem_name = '블랙핑크';
+```
+- 긴 조인 쿼리를 매번 입력할 필요가 없음
+
+---
+
+## 4. 뷰의 생성, 수정, 삭제
+
+### 별칭을 사용한 뷰 생성
+- 뷰의 열 이름을 테이블과 다르게 지정 가능 (띄어쓰기, 한글 가능)
+- 별칭은 작은따옴표 또는 큰따옴표로 묶고, `AS`를 붙이면 코드가 명확해짐
+```sql
+CREATE VIEW v_viewtest1
+AS
+    SELECT B.mem_id 'Member ID', M.mem_name AS 'Member Name',
+           B.prod_name "Product Name",
+           CONCAT(M.phone1, M.phone2) AS "Office Phone"
+        FROM buy B
+            INNER JOIN member M
+            ON B.mem_id = M.mem_id;
+```
+- 조회할 때 열 이름에 공백이 있으면 **백틱(`)** 으로 묶어야 함
+```sql
+SELECT DISTINCT `Member ID`, `Member Name` FROM v_viewtest1;
+```
+
+### 뷰 수정: ALTER VIEW
+```sql
+ALTER VIEW v_viewtest1
+AS
+    SELECT B.mem_id '회원 아이디', M.mem_name AS '회원 이름',
+           B.prod_name "제품 이름",
+           CONCAT(M.phone1, M.phone2) AS "연락처"
+        FROM buy B
+            INNER JOIN member M
+            ON B.mem_id = M.mem_id;
+```
+- 열 이름에 한글은 가능하지만 다른 환경에서 인식 문제가 생길 수 있어 권장하지 않음
+
+### 뷰 삭제: DROP VIEW
+```sql
+DROP VIEW v_viewtest1;
+```
+
+### CREATE OR REPLACE VIEW
+- `CREATE VIEW`: 같은 이름의 뷰가 있으면 **오류**
+- `CREATE OR REPLACE VIEW`: 있으면 **덮어쓰고**, 없으면 새로 생성
+- `DROP VIEW` + `CREATE VIEW`를 연속으로 한 것과 같은 효과
+```sql
+CREATE OR REPLACE VIEW v_viewtest2
+AS
+    SELECT mem_id, mem_name, addr FROM member;
+```
+
+### 데이터베이스 개체의 공통 문법
+| 작업 | 문법 | 예 |
+|---|---|---|
+| 생성 | CREATE 개체_종류 | CREATE VIEW |
+| 수정 | ALTER 개체_종류 | ALTER TABLE |
+| 삭제 | DROP 개체_종류 | DROP PROCEDURE |
+
+---
+
+## 5. 뷰의 정보 확인
+```sql
+DESCRIBE v_viewtest2;          -- 뷰의 열 정보 (DESC로 줄여 써도 됨)
+SHOW CREATE VIEW v_viewtest2;  -- 뷰의 소스 코드
+```
+- 뷰를 DESCRIBE하면 **PRIMARY KEY 등의 정보는 보이지 않음** (Key 열이 비어 있음)
+- SHOW CREATE VIEW 결과가 잘 안 보이면 `Form Editor` 창에서 확인
+
+---
+
+## 6. 뷰를 통한 데이터 수정/삭제/입력
+
+### 수정: 가능
+```sql
+UPDATE v_member SET addr = '부산' WHERE mem_id = 'BLK';
+```
+- 뷰를 통해 원본 테이블의 데이터가 수정됨
+
+### 입력: 조건이 맞아야 가능
+```sql
+INSERT INTO v_member(mem_id, mem_name, addr) VALUES('BTS', '방탄소년단', '경기');
+-- Error 1423: underlying table doesn't have a default value
+```
+- 원인: member의 `mem_number`는 NOT NULL인데, 뷰에 이 열이 없어서 값을 넣을 방법이 없음
+- 해결 방법 (셋 중 하나)
+  - 뷰에 mem_number 열을 포함하도록 재정의
+  - member의 mem_number를 NULL 허용으로 변경
+  - mem_number에 기본값(DEFAULT) 지정
+- 정리: **뷰에서 보이지 않는 열 중에 NOT NULL이 있으면 뷰로 입력할 수 없다**
+
+### 범위를 지정한 뷰
+```sql
+CREATE VIEW v_height167
+AS
+    SELECT * FROM member WHERE height >= 167;
+
+DELETE FROM v_height167 WHERE height < 167;
+-- 0 row(s) affected → 뷰에 167 미만 데이터가 없으므로 삭제될 것도 없음
+```
+
+### 문제점: 범위 밖의 데이터도 입력됨
+```sql
+INSERT INTO v_height167 VALUES('TRA', '티아라', 6, '서울', NULL, NULL, 159, '2005-01-01');
+-- 1 row(s) affected → 입력은 됐지만 뷰에서는 보이지 않음
+```
+
+### WITH CHECK OPTION
+- 뷰에 설정된 조건을 벗어나는 값은 **입력되지 않도록** 막음
+```sql
+ALTER VIEW v_height167
+AS
+    SELECT * FROM member WHERE height >= 167
+        WITH CHECK OPTION;
+
+INSERT INTO v_height167 VALUES('TOB', '텔레토비', 4, '영국', NULL, NULL, 140, '1995-01-01');
+-- Error 1369: CHECK OPTION failed
+```
+
+### 복합 뷰
+```sql
+CREATE VIEW v_complex
+AS
+    SELECT B.mem_id, M.mem_name, B.prod_name, M.addr
+        FROM buy B
+            INNER JOIN member M
+            ON B.mem_id = M.mem_id;
+```
+- 복합 뷰는 **읽기 전용** → 입력/수정/삭제 불가
+
+---
+
+## 7. 뷰가 참조하는 테이블의 삭제
+```sql
+DROP TABLE IF EXISTS buy, member;   -- 뷰가 참조 중이어도 삭제됨
+SELECT * FROM v_height167;
+-- Error 1356: View references invalid table(s) or column(s) ...
+```
+- 테이블은 뷰가 참조하고 있어도 **삭제된다** (바람직하지는 않음)
+- 참조 테이블이 없으면 뷰를 조회할 수 없음
+
+### 뷰의 상태 확인: CHECK TABLE
+```sql
+CHECK TABLE v_height167;
+-- Msg_text에 오류와 Corrupt 표시
+```
+
+---
+
+## 8. 정리
+| 용어 | 설명 |
+|---|---|
+| CREATE VIEW | 뷰를 생성하는 SQL |
+| 별칭 | 뷰의 열 이름을 테이블과 다르게 지정 |
+| 백틱(`) | 뷰 조회 시 열 이름에 공백이 있으면 묶어주는 기호 |
+| ALTER VIEW | 뷰를 수정하는 SQL |
+| DROP VIEW | 뷰를 삭제하는 SQL |
+| CREATE OR REPLACE VIEW | 뷰가 있으면 덮어쓰고, 없으면 새로 생성 |
+| DESCRIBE | 뷰 또는 테이블의 정보 조회 |
+| SHOW CREATE VIEW | 뷰의 소스 코드 확인 |
+| WITH CHECK OPTION | 뷰에 설정된 조건의 데이터만 입력되도록 제한 |
+| CHECK TABLE | 뷰 또는 테이블의 상태 확인 |
+
 
 > **확인문제: 다음은 뷰의 특징입니다. 거리가 먼 것을 하나 고르세요.**
 
@@ -396,7 +633,11 @@ CHECK / DEFAULT / PRIMAY KEY / UNIQUE / NOT NULL / FOREIGN KEY
 ```
 
 ```
-여기에 답과 그 이유를 적어주세요!
+답: 1️⃣
+이유: 
+- 뷰는 테이블의 **필요한 열만 골라서** 만들 수 있다. 
+- 오히려 일부 열만 보여줄 수 있다는 점이 뷰의 장점이다. 연락처, 키 같은 개인 정보 열을 빼고 뷰를 만들면 보안에 도움이 된다(3️⃣, 4️⃣).
+- 2️⃣는 긴 조인 쿼리를 `v_memberbuy` 같은 뷰로 만들어두면 `SELECT * FROM v_memberbuy`처럼 간단히 조회할 수 있으므로 맞는 설명이다.
 ```
 
 
@@ -453,7 +694,14 @@ USE week4_db;
 1. 각 문제의 실행 결과가 보이도록 화면을 캡처합니다.
 2. 테이블 생성 결과, 데이터 삽입 결과, 뷰 생성 및 조회 결과가 모두 보이도록 제출합니다.
 
-<!-- 이 부분을 지우고 인증사진을 제출해주세요.-->
+<img width="1357" height="987" alt="image" src="https://github.com/user-attachments/assets/84762afc-7176-4be1-ac38-121571de1131" />
+<img width="1375" height="972" alt="image" src="https://github.com/user-attachments/assets/b09d4c2c-e8f4-4d9a-82c4-8337c8756670" />
+<img width="1277" height="957" alt="image" src="https://github.com/user-attachments/assets/f9d950dc-a160-40c3-8282-7f2e5bca28a8" />
+<img width="1232" height="972" alt="image" src="https://github.com/user-attachments/assets/be40ffe4-8db6-42f7-8b3a-cf1bbcecb7ba" />
+<img width="1131" height="747" alt="image" src="https://github.com/user-attachments/assets/7f2120e8-fd33-42f1-a47e-b10983edc1ae" />
+
+
+
 
 ### 🎉 수고하셨습니다.
 
