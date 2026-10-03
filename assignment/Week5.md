@@ -322,7 +322,10 @@ SELECT * FROM member;
 
 <!-- '인덱스 생성과 제거 실습(310p~)' 흐름에 맞게 진행한 후, 실습 과정이 보일 수 있도록 인증 사진을 2장 이상 제출해 주세요. -->
 
-<!-- 이 부분을 지우고 인증사진을 제출해주세요.-->
+<img width="1275" height="976" alt="image" src="https://github.com/user-attachments/assets/d812c411-ae11-4325-947a-f1e84fe00b03" />
+<img width="1231" height="982" alt="image" src="https://github.com/user-attachments/assets/20fcd449-c65a-4149-9e82-db7a416162d4" />
+<img width="1182" height="967" alt="image" src="https://github.com/user-attachments/assets/1860f2d4-d565-4a8b-981f-5a6d442fff13" />
+
 
 
 ---
