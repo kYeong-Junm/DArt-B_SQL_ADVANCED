@@ -380,7 +380,12 @@ INSERT INTO employees VALUES
 
 인덱스 생성 결과, EXPLAIN 실행 결과, 인덱스 삭제 결과가 모두 보이도록 캡처하여 제출하세요.
 
-<!-- 이 부분을 지우고 인증사진을 제출해주세요.-->
+<img width="1267" height="992" alt="image" src="https://github.com/user-attachments/assets/6dffacfb-141f-48fc-85cd-78209bbbb670" />
+<img width="1227" height="982" alt="image" src="https://github.com/user-attachments/assets/61c702e0-9106-4f6f-a0be-3e0441a66079" />
+<img width="1282" height="990" alt="image" src="https://github.com/user-attachments/assets/ba3ab172-ed4e-4256-a521-f32332a1b8a8" />
+<img width="1287" height="1002" alt="image" src="https://github.com/user-attachments/assets/0e517ee0-944a-4924-b7be-ebf21ddcc7ec" />
+
+
 
 ### 🎉 수고하셨습니다.
 
