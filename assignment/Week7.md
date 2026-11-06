@@ -62,11 +62,178 @@ https://www.youtube.com/watch?v=aiMSluMNzI8&list=PLVsNizTWUw7GCfy5RH27cQL5MeKYnl
 
 
 
-
 ## 3. GUI 응용 프로그램 
 
 <!-- GUI 응용 프로그램에 관해 배우게 된 점을 적어주세요. -->
 
+---
+
+## GUI와 tkinter
+
+- **GUI(Graphical User Interface)**: 윈도에 그래픽 환경으로 제공되는 화면을 통틀어 말함
+- **tkinter**: 파이썬에서 GUI 응용 프로그램(엑셀, 한글, 크롬 같은 형태)을 만들 때 쓰는 **표준 윈도 라이브러리**
+- SQL을 모르는 사용자도 **마우스 클릭만으로 데이터 입력·조회**가 가능하도록 만들 수 있음
+
+---
+
+## 기본 윈도의 구성
+
+```python
+from tkinter import *     # ① tkinter 사용 선언 (윈도 및 관련 내용 사용 가능)
+
+root = Tk()               # ② 기본 윈도(루트 윈도) 생성
+
+# 이 부분에 코드를 추가해서 화면을 구성하고 처리
+
+root.mainloop()           # ③ 이벤트 처리 시작
+```
+
+| 코드 | 설명 |
+|---|---|
+| `from tkinter import *` | 윈도가 필요할 때 꼭 써야 하는 import 문 |
+| `Tk()` | 기본이 되는 윈도(**루트 윈도, root window**)를 반환. 이 줄이 실행될 때 윈도가 출력됨 |
+| `root.mainloop()` | 키보드 누르기, 마우스 클릭 등 **이벤트를 처리**하기 위해 필요. 창을 닫을 때까지 계속 실행됨 |
+
+**윈도 제목과 크기 지정**
+
+```python
+root = Tk()
+root.title("혼공 GUI 연습")     # 윈도 제목 표시
+root.geometry("400x200")        # 초기 크기를 400x200으로 지정 (가로x세로)
+root.mainloop()
+```
+
+---
+
+## 위젯(widget)
+
+윈도에 나오는 **버튼, 텍스트, 라디오 버튼, 이미지 등을 통합해서 지칭**하는 용어. 모든 위젯은 **`pack()` 함수를 사용해야 화면에 나타남**.
+
+### 라벨(Label) — 문자 표현
+
+형식: `Label(부모윈도, 옵션...)`
+
+```python
+label1 = Label(root, text="혼공 SQL은")
+label2 = Label(root, text="쉽습니다.", font=("궁서체", 30), bg="blue", fg="yellow")
+
+label1.pack()
+label2.pack()
+```
+
+| 옵션 | 설명 |
+|---|---|
+| `text` | 글자 내용 |
+| `font` | 글꼴과 크기 (예: `("궁서체", 30)`) |
+| `fg` | foreground의 약자, **글자색** |
+| `bg` | background의 약자, **배경색** |
+
+> 💡 `pack()`을 호출하지 않으면 위젯이 화면에 표시되지 않음. 부모 윈도를 `root`로 지정했으므로 루트 윈도에 라벨이 출력됨.
+
+### 버튼(Button) — 클릭 시 작업 실행
+
+형식: `Button(부모윈도, 옵션...)`. GUI에서 상당히 많이 쓰이는 위젯.
+
+- 라벨과의 차이점: **`command` 옵션**으로 버튼을 눌렀을 때 실행할 작업(함수)을 지정함. 나머지 옵션은 라벨과 거의 동일
+
+```python
+from tkinter import *
+from tkinter import messagebox      # ① 메시지 상자 사용을 위한 import
+
+def clickButton():
+    messagebox.showinfo('버튼 클릭', '버튼을 눌렀습니다..')
+
+root = Tk()
+root.geometry("200x200")
+
+button1 = Button(root, text="여기를 클릭하세요", fg="red", bg="yellow",
+                 command=clickButton)       # ② command에 함수 지정
+button1.pack(expand=1)                      # ③ expand=1: 버튼을 화면 중앙에 표현
+
+root.mainloop()
+```
+
+> 📝 `command=clickButton`처럼 **함수 이름만** 지정함 (괄호 `()`를 붙이지 않음). 버튼 클릭 시 메시지 상자가 나타남.
+
+---
+
+## 위젯의 정렬과 여백 — `pack()` 옵션
+
+### 정렬: `side`
+
+| 값 | 설명 |
+|---|---|
+| `LEFT` | 왼쪽부터 가로로 채움 |
+| `RIGHT` | 오른쪽부터 가로로 채움 |
+| `TOP` | 위에서부터 수직으로 정렬 |
+| `BOTTOM` | 아래에서부터 수직으로 정렬 |
+
+```python
+button1.pack(side=LEFT)
+button2.pack(side=LEFT)
+button3.pack(side=LEFT)       # 혼공1 혼공2 혼공3 (가로 배치)
+```
+
+> ⚠️ `UP`이라는 값은 없음. 수직 정렬은 `TOP` / `BOTTOM`을 사용.
+
+### 여백: `padx`, `pady`
+
+위젯 사이에 여백을 주는 옵션. **`padx=픽셀값`**(가로), **`pady=픽셀값`**(세로) 방식으로 사용.
+
+```python
+button1.pack(side=TOP, fill=X, padx=10, pady=10)
+```
+
+- `fill=X`: 가로 방향으로 채움
+
+---
+
+## 프레임, 엔트리, 리스트 박스
+
+| 위젯 | 설명 |
+|---|---|
+| **프레임(Frame)** | 화면을 여러 구역으로 **나눌 때** 사용. 구역만 나눌 뿐 화면에는 표시되지 않음 |
+| **엔트리(Entry)** | **입력 상자**를 표현 |
+| **리스트 박스(Listbox)** | **목록**을 표현 |
+
+```python
+from tkinter import *
+root = Tk()
+root.geometry("200x250")
+
+upFrame = Frame(root)             # ① 프레임 2개 생성 후 pack
+upFrame.pack()
+downFrame = Frame(root)
+downFrame.pack()
+
+editBox = Entry(upFrame, width=10)         # ② 부모를 root가 아닌 upFrame으로 지정
+editBox.pack(padx=20, pady=20)
+
+listbox = Listbox(downFrame, bg='yellow')  # ③ 리스트 박스는 아래쪽 downFrame에 표시
+listbox.pack()
+
+listbox.insert(END, "하나")                # ④ END: 데이터를 제일 뒤에 첨부
+listbox.insert(END, "둘")
+listbox.insert(END, "셋")
+
+root.mainloop()
+```
+
+> 💡 위젯을 만들 때 **첫 번째 매개변수(부모)**로 지정한 곳에 위젯이 출력됨 (root 또는 특정 프레임).
+
+---
+
+## 완전한 형태의 GUI 응용 프로그램
+
+SQL과 연동해서 **GUI 화면에서 데이터 입력·조회**가 가능한 프로그램 (`userTable` 사용).
+
+### 프로그램 구조
+
+```
+[메인 코드부]  윈도 / 프레임 / 엔트리 4개 / 버튼 2개 / 리스트 박스 4개 구성
+      ├─ [입력] 버튼 → insertData() 호출
+      └─ [조회] 버튼 → selectData() 호출
+```
 
 ---
 
