@@ -47,7 +47,9 @@ https://www.youtube.com/watch?v=aiMSluMNzI8&list=PLVsNizTWUw7GCfy5RH27cQL5MeKYnl
 
 <!-- 이번 챕터에서 제시된 실습을 흐름에 맞게 진행한 후, 실습 과정이 보일 수 있도록 인증 사진을 2장 이상 제출해 주세요. -->
 
-<!-- 이 부분을 지우고 인증사진을 제출해주세요.-->
+<img width="807" height="837" alt="image" src="https://github.com/user-attachments/assets/eedfda46-f975-4755-aa26-07ab40b04b0c" />
+![Uploading image.png…]()
+
 
 
 ## 2. 파이썬과 MySQL의 연동
