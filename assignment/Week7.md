@@ -58,6 +58,7 @@ https://www.youtube.com/watch?v=aiMSluMNzI8&list=PLVsNizTWUw7GCfy5RH27cQL5MeKYnl
 
 <img width="767" height="1007" alt="image" src="https://github.com/user-attachments/assets/bbf99922-a8d8-4669-8462-d9253473118b" />
 <img width="902" height="367" alt="image" src="https://github.com/user-attachments/assets/44759feb-b7a5-48e2-a645-6d5e8fedaa7f" />
+<img width="892" height="892" alt="image" src="https://github.com/user-attachments/assets/62ba9341-5bc2-49f7-8d44-e9c4b01ce6f5" />
 
 
 
