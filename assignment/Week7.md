@@ -57,6 +57,7 @@ https://www.youtube.com/watch?v=aiMSluMNzI8&list=PLVsNizTWUw7GCfy5RH27cQL5MeKYnl
 <!-- 이번 챕터에서 제시된 실습을 흐름에 맞게 진행한 후, 실습 과정이 보일 수 있도록 인증 사진을 2장 이상 제출해 주세요. -->
 
 <img width="767" height="1007" alt="image" src="https://github.com/user-attachments/assets/bbf99922-a8d8-4669-8462-d9253473118b" />
+<img width="892" height="936" alt="image" src="https://github.com/user-attachments/assets/1fb44ad7-6c3f-4ec1-bbaf-2aee86902c3d" />
 
 
 
